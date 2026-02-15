@@ -1,0 +1,166 @@
+:root {
+    --player-color: cyan;
+    --ai-color: gold;
+    --meteor-color: deeppink;
+    --background-color: black;
+    --text-color: darkgray;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: var(--background-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+
+* {
+    transition: color .3s, background-color .3s;
+}
+
+.game-container {
+    border-radius: 16px;
+    position: relative;
+    cursor: crosshair;
+}
+
+/* 
+MARK: METEOR
+*/
+.game-meteor {
+    border: 1px solid var(--meteor-color);
+    box-shadow: 0px 0px 10px var(--meteor-color), 0px 0px 10px var(--meteor-color) inset;
+    border-radius: 10px;
+    animation: blink .1s infinite alternate;
+    z-index: 1;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.2;
+    }
+}
+
+.game-meteor-explode-player {
+    animation: meteor-explode-player 0.5s forwards;
+}
+
+.game-meteor-explode-ai {
+    animation: meteor-explode-ai 0.5s forwards;
+}
+
+@keyframes meteor-explode-player {
+    0% {
+        border-color: var(--player-color);
+        box-shadow:
+            0px 0px 10px var(--player-color), 
+            0px 0px 0px 0px var(--background-color),
+            0px 0px 0px var(--meteor-color),
+            0px 0px 10px var(--player-color) inset;
+        opacity: 1;
+    }
+    100% {
+        border-color: var(--player-color);
+        box-shadow:
+            0px 0px 10px var(--player-color),
+            0px 0px 5px 200px var(--background-color),
+            0px 0px 5px 201px var(--meteor-color),
+            0px 0px 10px var(--player-color) inset;
+        opacity: 0;
+    }
+}
+
+@keyframes meteor-explode-ai {
+    0% {
+        border-color: var(--ai-color);
+        box-shadow:
+            0px 0px 10px var(--ai-color), 
+            0px 0px 0px 0px var(--background-color),
+            0px 0px 0px var(--meteor-color),
+            0px 0px 10px var(--ai-color) inset;
+        opacity: 1;
+    }
+    100% {
+        border-color: var(--ai-color);
+        box-shadow:
+            0px 0px 10px var(--ai-color),
+            0px 0px 5px 200px var(--background-color),
+            0px 0px 5px 201px var(--meteor-color),
+            0px 0px 10px var(--ai-color) inset;
+        opacity: 0;
+    }
+}
+
+/* 
+MARK: SUPER METEOR
+*/
+
+.game-super-meteor {
+    border: 1px solid var(--meteor-color);
+    box-shadow: 0px 0px 20px var(--meteor-color), 0px 0px 5px var(--meteor-color) inset;
+    border-radius: 10px;
+    animation: blink 1s infinite alternate;
+}
+
+/*
+MARK: PLAYER
+*/
+.game-player {
+    border: 1px solid var(--player-color);
+    border-radius: 999px;
+    box-shadow: 0px 0px 10px var(--player-color), 0px 0px 10px var(--player-color) inset;
+    transition: top .3s;
+    z-index: 2;
+}
+
+.game-ai {
+    border: 1px solid var(--ai-color);
+    border-radius: 999px;
+    box-shadow: 0px 0px 10px var(--ai-color), 0px 0px 10px var(--ai-color) inset;
+    transition: top .3s;
+    z-index: 2;
+}
+
+/*
+MARK: BULLET
+*/
+.game-ai-bullet {
+    background-color: var(--ai-color);
+    border-radius: 2px;
+    box-shadow: 0px 0px 5px var(--ai-color);
+}
+.game-bullet {
+    background-color: var(--player-color);
+    border-radius: 2px;
+    box-shadow: 0px 0px 5px var(--player-color)
+}
+
+/*
+MARK: SCORE
+*/
+.game-score {
+    color: var(--text-color);
+    font-family: monospace;
+    font-size: 20px;
+    user-select: none;
+    text-shadow: 0px 0px 5px var(--text-color);
+    letter-spacing: .5ch;
+    text-align: center;
+    width: 100%;
+
+    .player-score {
+        color: var(--player-color);
+        text-shadow: 0px 0px 5px var(--player-color);
+    }
+    .ai-score {
+        color: var(--ai-color);
+        text-shadow: 0px 0px 5px var(--ai-color);
+    }
+}

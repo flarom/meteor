@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meteor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="game-container" class="game-container"></div>
+
+    <script src="meteorSoundEngine.js"></script>
+    <script src="meteor.js"></script>
+    <script>
+        initialzeGame(document.getElementById('game-container'), {
+            width: 500,
+            height: 600,
+            aiInitialMovementRange: 1,
+            aiInitialShootCooldown: 1000,
+            aiCanGetStronger: true,
+            aiCanGetWeaker: true,
+            scoreBoardShowRounds: false,
+            scoreBoardShowCpuSpeed: true,
+            meteorAmount: 1,
+            superMeteor: true,
+            aiShootSuperMeteor: true,
+            superMeteorHeightAdvantage: 20
+        });
+
+        // konami code changes color scheme
+        const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+        let konamiIndex = 0;
+        let colorSchemes = [
+            { player: 'cyan', ai: 'gold', meteor: 'deeppink', background: 'black', text: 'darkgray' },               // Default
+            { player: '#39ff14', ai: '#ff2079', meteor: '#00f7ff', background: '#0a0a0f', text: '#e0e0e0' },     // Neon Night
+            { player: '#ff9a00', ai: '#ff2e63', meteor: '#08d9d6', background: '#2b0033', text: '#f8f8ff' },     // Sunset Vapor
+            { player: '#00ff41', ai: '#008f11', meteor: '#66ff66', background: '#000000', text: '#00ff41' },     // Matrix
+            { player: '#a0e9ff', ai: '#5fdde5', meteor: '#c3f8ff', background: '#0f1c2e', text: '#e6f7ff' },     // Ice World
+            { player: '#ff3c38', ai: '#ff8c00', meteor: '#ffd166', background: '#1a0000', text: '#ffe5e0' },     // Lava Core
+            { player: '#ff77aa', ai: '#ffb7c5', meteor: '#ffd1dc', background: '#2a1a2e', text: '#ffeaf4' },     // Sakura Dream
+            { player: 'red', ai: 'lime', meteor: 'blue', background: '#111111', text: '#ffffff' },               // RGB Madness
+            { player: '#f706cf', ai: '#00f0ff', meteor: '#ffe700', background: '#12002b', text: '#f5f5ff' },     // Cyberpunk
+            { player: '#2ecc71', ai: '#27ae60', meteor: '#a3e635', background: '#0b1d13', text: '#d4ffe8' },     // Forest Spirit
+            { player: '#0f380f', ai: '#306230', meteor: '#0f380f', background: '#9bbc0f', text: '#0f380f' },     // Retro GameBoy
+            { player: '#ffffff', ai: '#888888', meteor: '#ff0000', background: '#000000', text: '#ffffff' },     // Void
+            { player: '#000000', ai: '#0a0a0a', meteor: '#000000', background: '#ffffff', text: '#000000' } // Light
+        ];
+        let currentColorScheme = 0;
+
+        document.addEventListener('keydown', (event) => {
+            let key = event.key.toLowerCase() === event.key ? event.key : event.code;
+            if (key === konamiCode[konamiIndex]) {
+                konamiIndex++;
+                if (konamiIndex === konamiCode.length) {
+                    // change colors
+                    currentColorScheme = (currentColorScheme + 1) % colorSchemes.length;
+                    const scheme = colorSchemes[currentColorScheme];
+                    document.documentElement.style.setProperty('--player-color', scheme.player);
+                    document.documentElement.style.setProperty('--ai-color', scheme.ai);
+                    document.documentElement.style.setProperty('--meteor-color', scheme.meteor);
+                    document.documentElement.style.setProperty('--background-color', scheme.background);
+                    document.documentElement.style.setProperty('--text-color', scheme.text);
+                    konamiIndex = 0;
+                }
+            } else {
+                konamiIndex = 0;
+                // check if this key starts the sequence again
+                if (key === konamiCode[0]) {
+                    konamiIndex = 1;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
